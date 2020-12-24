@@ -1,0 +1,156 @@
+\section{The semantics of the decrease constructor}
+
+I'm taking the semantics of decreases to be that for a given function f, when I call recursively in f to f, the measure decreases. This ignores calls to other functions.
+
+\section{Processing pipeline}
+
+\section{Processors}
+
+\subsection{Recursion processor}\label{sec:recursion}
+  
+The recursion processor was taken as is from previous work \cite{nicolasthesis}. The algorithm checks the body of a SCC with a single function: 
+
+\[f(\overrightarrow{p_0}) = \ldots g^{(i)}(\overrightarrow{p_i}) \ldots f^{(j)}(\overrightarrow{p_j}) \ldots\]
+
+Each $g^{(i)}$ is checked for termination. If they terminate, the algorithm checks $f^{(j)}$. If $j = 0$ then $m(f) = 0$. Otherwise, we search for a $k$ where for all $j$ we have $(\overrightarrow{p_j})_k < (\overrightarrow{p_0})_k$. In the current version, this decrease is just an increase in the field selectors. If this succeeds then $m(f) = (\overrightarrow{p_0})_k$. 
+
+  
+\subsection{Relation processor}\label{sec:relprocessor}
+
+The relation processor computes for each function $f$ its function calls $f_i$, adding relations $f \stackrel{p_i}{\to} f_i$. It then computes all $\text{cmp}(size(\overrightarrow{p_j}), size(\overrightarrow{p}))$. The assumption is that $\forall j. \text{cmp}(size(\overrightarrow{p_j}), size(\overrightarrow{p})) \in \{ \le, < \}$.
+
+\[
+m(f) = 
+\begin{cases}
+(size(\overrightarrow{p}), 0) & \forall j. \text{cmp}(size(\overrightarrow{p_j}), size(\overrightarrow{p})) = < \\
+(size(\overrightarrow{p}), i) & \forall j. f \stackrel{p_j}{\to} f_j \implies m(f_j)._2 < i
+\end{cases}
+\]
+
+\subsection{Application strengthener}
+
+Functions are ordered in reverse topological order, i.e. first we have the functions that don't call other functions, then those that call these and so on. For each function, we scan its body: \[
+f(\overrightarrow{p_0}) = 
+\text{if }(path_i) \; f^{(i)}(\overrightarrow{p_i}) \ldots \\ 
+\text{if }(path_j) \; f^{(j)}(\overrightarrow{p_j}) \ldots
+\] and compute constraints $f \stackrel{c}{\to} v$ where $v$ is one of $f$'s higher-order parameters and $c \in \{<, \le,=\}$. The constraint is derived from three pieces of information:
+
+\begin{enumerate}
+\item For any application $v(\overrightarrow{p})$ we compute $\text{cmp}(size(\overrightarrow{p}), size(\overrightarrow{p_0}))$. We write $v \to$. 
+\item Recursively, for any function invocation $f_i(\ldots,v, \ldots)$ in the body of $f$, we know constraints $f_i \to v$ signaling the decrease in parameters in applications of $v$ inside $f_i$. Note that functions invocations in the same strong connected component as $f$ won't have any constraint.
+\item We take into account the decrease in parameters from $f$ to $f_i$, i.e.  $\text{cmp}(size(\overrightarrow{p_i}), size(\overrightarrow{p_0}))$. We write $f \to f_i$. 
+\end{enumerate}
+
+Finally, we can compute $f \to v$ as:
+
+\[
+f \to v = 
+\begin{cases}
+? & v \to = ? \\
+? & f_i \to v = ?, f_i \text{ unanalyzed} \\ 
+? & f \to f_i = ?, f_i \text{ unanalyzed} \\
+? & f_i \to v = <, f \to f_i = ? \\
+< & f_i \to v = <, f \to f_i \neq ? \\
+f \to f_i  & f_i \to v = \le
+\end{cases}
+\]
+
+\subsection{Postcondition strengthener}
+
+As in the application strengthener, functions are ordered in reverse topological order so that we can profit from previously found post-conditions. Consider a function:
+\[
+f(\overrightarrow{p}) = \{v \Rightarrow pre(v)\} \{ b \} \{v \Rightarrow post(v) \}
+\]
+the algorithm checks (in the reverse topological order) if the following stronger post-condition holds:
+
+\[
+f(\overrightarrow{p}) = \{v \Rightarrow pre(v)\} \{ b \} \{v \Rightarrow post(v) \land \text{cmp}(size(v), size(\overrightarrow{p})) \}
+\]
+in which case it is stored for further iteration of the algorithm, i.e. when we repeat the process on a bigger function, we first encode the solved functions with the strengthened post-conditions and then we call the solver to test if the new post-condition holds. Note that $\text{cmp}$ is just the order relation of the current processor.
+
+\subsection{Chain processor}\label{sec:chain}
+
+There are only two types of chains:
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.3\textwidth]{img/chain1}
+\caption{No loops chain}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.3\textwidth]{img/chain2}
+	\caption{Loop chain}
+\end{figure}
+
+The processor then behaves as follows. Take a chain: \[c = f_0 \stackrel{p_1}{\to} f_1 \stackrel{p_2}{\to} \ldots \stackrel{p_n}{\to} f_n \stackrel{p_0}{\to} f_0\] the underlying solver checks: \[ \forall \overrightarrow{p} \in \text{Param($f_0$)}. p_1 \land \ldots \land p_n \land p_0 \implies \text{m}(f_n \cdot \ldots \cdot f_0 (\overrightarrow{p})) < \text{m}(\overrightarrow{p}) \] i.e. for each logic path that leads to the above chain of calls and each parameter tuple $\overrightarrow{p}$ triggering such logic path, we have $m(f_n( \ldots  f_1 ( f_0(\overrightarrow{p})))) < m(\overrightarrow{p})$. 
+
+\begin{definition}[Loop point]
+$\text{loops}(f_0) = \{ f. f \neq f_0 \land f_0 \to_{*} f \to_{+} f \to_{*} f_0 \land \text{ there is no occurrence of } f_0 \text{ in the segment between } fs \}$
+\end{definition}
+
+\begin{definition}[Chain]
+$\text{chains}(f_0) = \{c. f_0 \to_{*} f_0 \}$
+\end{definition}
+
+\begin{theorem}
+	The chain processor is sound.
+\end{theorem}
+\textbf{Proof:}
+
+Let's proof that if chain processor outputs \textit{terminates} on $f_0$ then $f_0$ is terminating. There are two cases:
+
+\begin{itemize}
+\item $\text{loops} = \emptyset$: then we start analysing on $f_0$ and there is a single chain. Consider $f_i$ on that chain. We want to prove that termination of the chain starting from $f_0$ is equivalent to termination of the chain starting from $f_i$. 
+
+If computation starts from $f_i$. For non-termination, I have to give an input where the path condition starting from $f_0$ is not true. If from this input we stay in the chain and reach $f_0$ then we will reenter the chain and decrease the magnitude. So we terminate. Thus, we have to leave the chain at some point $f_j$. 
+
+\begin{itemize}
+\item If we leave the chain to call a function $g$ out of the SCC then the termination burden is on $g$.
+\item  If we leave the chain to call recursively $f_j$, then $f_j$ would be a loop point. This is a contradiction.
+\item If we leave the chain to call some $f_t$ with $0 < t < j$, we would have that $f_j$ is again a loop point. That's a contradiction. Note that loop points are unaware of path conditions.
+\item If we leave the chain to call some $f_t$ with $j < t <= n$ then I repeat my argument on $f_t$. 
+\end{itemize}
+
+Since the length of the chain is finite, I either eventually reach $f_0$ or call a function $g$ that is external to the computation. So $g$ carries the burden of the termination proof. 
+
+\item $\text{loops} \neq \emptyset$: then we start analysing on the unique loop point $l$ and show decrease in each chain. Here the analysis is complicated by the fact that we can unfold chains to prove a decrease.
+\end{itemize} 
+
+
+
+
+Does the chain termination behaviour depend on the start of the chain? There are two cases:
+
+
+\newpage
+
+In particular, this paths only cover the set of potentially non-terminating parameter values. We see thus, that there is a fundamental difference between building a decreasing measure for a chain and proving that the chain terminates: the termination argument needs to be shown decreasing even for parameter tuples that don't trigger fully the chain. \footnote{Moreover, this reinforces the advantage of having the semantics of decrease to account only for loops that start and end in the same function. In that case the decrease only refers to logic conditions that are clear from the original function.} 
+
+Our goal is to give measure functions $m_0, \ldots, m_n$ such that: \[\forall i \in \{0..n\}. \forall \overrightarrow{p} \in \text{Param}(f_i). p_{i+1} \implies \text{m}_{(i+1) \text{ mod } n}(f_i(\overrightarrow{p})) < \text{m}_i(\overrightarrow{p}) \] Then set: 
+\[
+m_0(\overrightarrow{p}) = (m(\overrightarrow{p}), 0, n) 
+\] 
+\[ 
+m_1(\overrightarrow{q}) = \begin{cases}
+(\text{m}(f_n \cdot \ldots \cdot f_1(\overrightarrow{q})), 1, n-1) & \text{if } p_1 \land p_2 \land \ldots \land p_0 \\
+(m(\overrightarrow{p}), 0, n-1) & \text{ otherwise } 
+\end{cases} 
+\]
+\[ 
+m_2(\overrightarrow{q}) = \begin{cases}
+(\text{m}(f_n \cdot \ldots \cdot f_2(\overrightarrow{q})), 1, n-1) & \text{if } (\exists \overrightarrow{j} \in \text{Param}(f_0). p_1 \land \overrightarrow{q} = f_0(\overrightarrow{j})) \land p_2 \land \ldots \land p_0 \\
+(m(\overrightarrow{p}), 0, n-2) & \text{ otherwise } 
+\end{cases} 
+\]
+\[ 
+\ldots
+\]
+
+Assume function $f_i$ was called with parameter tuple $\overrightarrow{q}$. $\overrightarrow{q}$ can either trigger the full of $c$ or only a subchain of it. The path condition to complete the chain $p_i$ and the final arguments $\text{arg}_i$ calling $f_0$ can be computed easily from the representation of $c$. Thus if $p_i$ holds, I annotate the measure $(m(\text{arg}_i), (n - i) \text{ mod } n, n - i)$.
+
+\textbf{Conclusion to investigate:}
+
+Both examples of chain processor failing require an unfolding of chains. However, it is not clear that we took care of that during the design of the measures.
+
+\subsection{Loop processor}

@@ -1,0 +1,26 @@
+\section{Recursion processor}\label{sec:recursion}
+
+We have added a variant that checks that there is always a decrease in some parameter in the integer ordering. This already solves Ex2:
+
+\begin{lstlisting}
+fastExpA(base: BigInt, exp: BigInt): BigInt = 
+ require(exp >= 0)
+ if (exp == 0)  1
+ else fastExpA(base+1, exp-1)
+\end{lstlisting}
+
+
+This can affect negatively performance, since we need to call the underlying solver. Yet, the underlying equations should be easy to automate. We have observed that a general size change termination would solve the Nested14 benchmark:
+
+\begin{lstlisting}
+rec1(j) = rec2(j,j)
+rec2(k,j) = if (k > 0) rec1(j-1) else 0
+\end{lstlisting}
+
+\section{Strengthener}
+
+A first observation is that the RelationBuilder violates the unique responsability principle. Why should it build relations and inject some extra information on them. 
+
+So we try to decouple both functionalities. We try to annotate the trees with the learnt metadata. We can annotate the parameters of a call. However, we cannot annotate in the termination checker, the function that is called, since this might be unknown to the strongly connected component and one queries the termination checker with a single function. So this last metadata information can only be annotated by the interface. In a method called refineSignature. The information is passed when a component is cleared.  
+
+Besides, the high-level reflection is that there is no good-handling of higher-order termination with the size-change termination analysis.

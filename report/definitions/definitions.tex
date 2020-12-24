@@ -1,0 +1,16 @@
+\section{Language}
+
+\section{Termination}
+
+We work with terms written in the System FR formulation. In System FR, correctness is shown via a typing algorithm. So if we manage to type a term we automatically get its partial correctness (i.e. its verification conditions) and its total correctness (i.e. termination). 
+
+\begin{definition}[Termination]
+Termination of higher-order function means that when this function is fully applied then the resulting term reduces to a value in a finite number of steps. 
+
+Note that higher-order arguments are also assumed to be terminating for this definition. 
+\end{definition}
+
+\begin{definition}[Problem]
+	A problem given by a function $f$ is a set of functions $S$ built from the reflexive transitive closure of $f$ transformed into the strong connected components of its call-graph. 
+	One rules out not well-formed datatypes, non-recursive components and unckecked functions. 
+\end{definition}

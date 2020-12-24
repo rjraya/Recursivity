@@ -1,0 +1,62 @@
+Here we will list some termination problems that are unsolved. 
+
+\section{Relation processor}
+
+\subsection{Indirect example}
+
+\begin{figure}[h]
+\begin{lstlisting}[style=myScalastyle]
+def app(f: BigInt => BigInt, arg: BigInt): BigInt = f(arg)
+def f(x: BigInt): BigInt = 
+ if (x > 0) app(f,x-1) else BigInt(0)
+\end{lstlisting}	
+\centering
+\caption{Indirect.scala}
+\end{figure}
+
+\subsubsection{Semantics perspective}
+
+According to chapter \ref{ch:definitions}, $app$ is terminating since its parameter $f$ is assumed to be so when fully applied. $f$ is terminating since when fully applied, the two if branches are terminating. 
+
+\subsubsection{Processor perspective}
+
+The termination pipeline sees that $app$ is non-recursive and so considers it terminating. The termination of $f$ is shown by the relation processor using the sum of argument sizes. There are two relations: 
+
+\[
+(fd: f40, p: x114 > 0, fi: app0(f40, x114 - 1), il: false)
+\] \[
+(fd: f40, p: x114 > 0 \land |x115| <= |x114 - 1|, fi: f40(x115), il: true)
+\] 
+the second relation corresponds to the call to $f(x)$ which appears after $\eta$-expanding $f$. The extra path condition is inferred in the application strengthener. 
+
+\subsubsection{Type checker perspective}
+
+The type checker sees that the inferred measure on $f$ is non-decreasing and thus declares it invalid. In the body of $f$ we have a call to $f$: \[
+app(y \Rightarrow f y,x-1)
+\] If $m$ is the inferred measure, the type checker emits the verification condition $m(x) > m(y)$ for arbitrary $x$ and $y$. Therefore there is no $m$ that can show termination of the example to the current typechecker. 
+
+
+\subsubsection{Proposed solution}
+
+We have an example of a semantically terminating function without measure. 
+
+If we want to keep the semantics of type checker, we could specify the extra information that the application strengthener gives as a refinement type as shown below. The type of $app$ would then need to be generalized (maybe in a polymorphic manner) via a program transformation. 
+
+\begin{lstlisting}[style=myScalastyle]
+def app(f: BigInt => BigInt, arg: BigInt): BigInt = f(arg)
+
+def f(x: BigInt): BigInt = {
+ if (x > 0) app((y: { z : BigInt | z <= x-1 }) => f(y),x-1) else BigInt(0)
+}
+\end{lstlisting}
+
+I believe that this would probably handle 5 ignored tests: ConstantPropagation, HOTermination, Indirect, QuickSort, MergeSort and MergeSort2.
+
+\subsection{Modules hanging}
+
+ls is Nil || ls.t is Nil || 
+
+ListPrimitiveSize[BigInt](filter[BigInt](ls.t, (x$1: BigInt) => x$1 < ls.h)) < ListPrimitiveSize[BigInt](ls)
+
+
+ls is Nil || ls.t is Nil || size[BigInt](filter[BigInt](ls.t, (x$1: BigInt) => x$1 < ls.h)) < size[BigInt](ls)
