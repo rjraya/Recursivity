@@ -1,4 +1,4 @@
-\documentclass[12pt]{report}
+\documentclass[12pt]{article}
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -8,40 +8,22 @@
 \usepackage{natbib}
 \usepackage{graphicx}
 
-\usepackage{theorem}
-\theoremstyle{break}
+\usepackage{amsthm}
+\newtheoremstyle{custom}%    <name>
+{\topsep}%   <space above>
+{\topsep}%   <space below>
+{\itshape}%  <body font>
+{}%          <indent amount>
+{\bfseries}% <Theorem head font>
+{.}%         <punctuation after theorem head>
+{\newline}%  <space after theorem head> (default .5em)
+{}%          <Theorem head spec>
+\theoremstyle{custom}
 \newtheorem{theorem}{Theorem}
 \newtheorem{definition}{Definition}[theorem]
+\newtheorem{proposition}{Proposition}[theorem]
 
-% scala listings
-
-\usepackage[T1]{fontenc}
-\usepackage{beramono}
-\usepackage{listings}
-\usepackage{xcolor}
-
-\definecolor{dkgreen}{rgb}{0,0.6,0}
-\definecolor{gray}{rgb}{0.5,0.5,0.5}
-\definecolor{mauve}{rgb}{0.58,0,0.82}
-
-\lstdefinestyle{myScalastyle}{
-	frame=tb,
-	language=scala,
-	aboveskip=3mm,
-	belowskip=3mm,
-	showstringspaces=false,
-	columns=flexible,
-	basicstyle={\small\ttfamily},
-	numbers=none,
-	numberstyle=\tiny\color{gray},
-	keywordstyle=\color{blue},
-	commentstyle=\color{dkgreen},
-	stringstyle=\color{mauve},
-	frame=single,
-	breaklines=true,
-	breakatwhitespace=true,
-	tabsize=3,
-}
+% proofs
 
 % place image here
 \usepackage{float}
@@ -50,57 +32,33 @@
 \author{Rodrigo Raya}
 \date{\today}
 
-\begin{filecontents}{example1.bib}
-	@book{Shelley:1993:F,
-		author="Shelley, Mary",
-		title="Frankenstein",
-		volume="84",
-		publisher="Project Gutenberg",
-		year="1993",
-		URL="https://www.gutenberg.org/files/84/84.zip",
-	}
-	
-	@book{Joyce:2003:U,
-		author="Joyce, James",
-		title="Ulysses",
-		volume="4300",
-		publisher="Project Gutenberg",
-		year="2003",
-		URL="https://www.gutenberg.org/files/4300/4300.zip",
-	}
-	
-	@book{Zola:2004:G,
-		author="Zola, \'Emile",
-		title="Germinale",
-		volume="5711",
-		publisher="Project Gutenberg",
-		year="2004",
-		URL="http://www.gutenberg.org/ebooks/5711.txt.utf-8",
-	}
-\end{filecontents}
 
 \begin{document}
 
-\chapter{Definitions}\label{ch:definitions}
-\input{definitions/definitions}
+\section{Recursiveness and computability}
+\input{intro/intro}
 
-\chapter{Current state}\label{ch:current}
-\input{current/current}
+\newpage
+\section{Basic recursion theory}
+\input{basic/basic}
 
-\chapter{The transformers hierarchy}
-\input{transformers/transformers}
 
-\chapter{Problematic examples}
-\input{examples/examples}
 
-\chapter{Modifications}\label{ch:mod}
-\input{modifications}
 
-\chapter{Reflection}
-\input{reflection/reflection}
 
 
 % Bibliography
 \bibliographystyle{plainnat}
 \bibliography{example}
 \end{document}
+
+
+
+
+
+
+
+
+
+
+

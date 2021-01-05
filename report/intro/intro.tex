@@ -1,0 +1,69 @@
+\begin{definition}[Primitive recursive function]
+	
+\end{definition}
+
+\begin{proposition}[Primitive recursive functions]
+	The following are primitive recursive:
+	
+	\begin{itemize}
+	\item Addition: $x+0 = x, x+S(y)=S(x+y)$
+	\item Predecessor: $pd(0) = 0, pd(x+1) = x$
+	\item Integer difference: $x-0=x,x-(y+1)=pd(x-y)$
+	\end{itemize}
+\end{proposition}
+\begin{proof}
+	\begin{itemize}
+		\item Define $
+		\begin{cases}
+		f(x,0) = I_1^1(x) \\
+		f(x,y+1) = h(x,y,f(x,y)) \\
+		h(x,y,z) = S(I_3^3(x,y,z))
+		\end{cases}$
+	\end{itemize}
+\end{proof}
+
+\begin{definition}[Recursive $\mu$-operator]
+	content...
+\end{definition}
+
+\begin{definition}[Recursive function]
+	A function $f$ is defined from a relation $R$ by $\mu$-recursion if:
+	
+	\begin{enumerate}
+	\item $R$ is a regular predicate, i.e. $\forall \overrightarrow{x}. \exists y. R(\overrightarrow{x}, y)$
+	\item $f(\overrightarrow{x}) = \mu y. R(\overrightarrow{x},y)$
+	\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Kleene's Normal Form Theorem]
+There exist: 
+	
+\begin{itemize}
+\item $U$ primitive recursive function
+\item for each $n$, primitive recursive predicates $T_n$
+\end{itemize} 
+
+such that for any recursive function $f^{(n)}$ there is a number $e$ for which: 
+
+\begin{itemize}
+\item $\forall \overrightarrow{x}. \exists y. T_n(e,\overrightarrow{x},y)$
+\item $f(\overrightarrow{x}) = U(\mu y. T_n(e,\overrightarrow{x},y))$
+\end{itemize}
+\end{theorem}
+\begin{proof}
+	Let $f^{(n)}$ be a recursive function. This function can be obtained algorithmically in different forms according to the inductive procedure that we use to generate recursive functions. Once we fix this procedure, we have fixed an algorithmic description of every recursive function. This description is in essence a sequence of elementary steps or computations. The theorem says that for any input $\overrightarrow{x}$, there is a computation giving the value of $f$ at $\overrightarrow{x}$ and that the final result can be obtained through primitive recursive operations using at most one minimization. The function $U$ plays the role of an interpreter, extracting the result value from the computation code. Note also that programs are treated as data, i.e. recursive functions are also reduced to numbers via indexes. This is done so that we can define numeric functions $U$ and $T_n$.
+	
+	\textbf{Recursive function coding: }
+	
+	$O \mapsto \langle 0 \rangle$
+	
+	$S \mapsto \langle 1 \rangle$
+	
+	$I_i^n \mapsto \langle 2, n, i \rangle$
+	
+	$g(h_1(\cdot), \ldots, h_m(\cdot)) \mapsto \langle 3, b_1, \ldots, b_m, a \rangle$
+	
+	$\text{prim. recursion}(g,h) \mapsto \langle 4,a,b \rangle$
+	
+	$\text{bounded recusion}(g) \mapsto \langle 5,a \rangle$
+\end{proof}

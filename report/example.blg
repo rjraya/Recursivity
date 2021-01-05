@@ -1,48 +1,5 @@
-This is BibTeX, Version 0.99d
-Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
-The top-level auxiliary file: example.aux
-Reallocating 'name_of_file' (item size: 1) to 9 items.
-The style file: plainnat.bst
-Reallocating 'name_of_file' (item size: 1) to 8 items.
-Database file #1: example.bib
-You've used 1 entry,
-            2773 wiz_defined-function locations,
-            597 strings with 4960 characters,
-and the built_in function-call counts, 311 in all, are:
-= -- 28
-> -- 10
-< -- 1
-+ -- 4
-- -- 3
-* -- 17
-:= -- 61
-add.period$ -- 3
-call.type$ -- 1
-change.case$ -- 4
-chr.to.int$ -- 1
-cite$ -- 2
-duplicate$ -- 15
-empty$ -- 23
-format.name$ -- 4
-if$ -- 56
-int.to.chr$ -- 1
-int.to.str$ -- 1
-missing$ -- 0
-newline$ -- 13
-num.names$ -- 4
-pop$ -- 5
-preamble$ -- 1
-purify$ -- 3
-quote$ -- 0
-skip$ -- 13
-stack$ -- 0
-substring$ -- 2
-swap$ -- 0
-text.length$ -- 0
-text.prefix$ -- 0
-top$ -- 0
-type$ -- 11
-warning$ -- 0
-while$ -- 3
-width$ -- 0
-write$ -- 21
+[0] Config.pm:302> INFO - This is Biber 2.9
+[0] Config.pm:305> INFO - Logfile is 'example.blg'
+[28] biber:313> INFO - === mar. déc. 29, 2020, 14:38:31
+[128] Utils.pm:185> ERROR - Cannot find control file 'example.bcf'! - did you pass the "backend=biber" option to BibLaTeX?
+[128] Biber.pm:114> INFO - ERRORS: 1

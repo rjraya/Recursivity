@@ -1,0 +1,58 @@
+\subsection{Partial recursive functions}
+
+\begin{definition}[Partial recursive $\mu$-operator]
+	A function $f$ is defined from a relation $R$ by $\mu$-recursion if $f(\overrightarrow{x}) \simeq \mu y. R(\overrightarrow{x},y)$.
+\end{definition}
+
+
+\begin{definition}[Partial recursive functions]
+	The class of partial recursive functions is the smallest class of functions \\	
+	1. Containing the inital functions $O,S, I_i^n$ \\
+	2. Closed under composition: $\varphi(\overrightarrow{x}) \simeq \psi(\gamma_1(\overrightarrow{x}), \ldots, \gamma_m(\overrightarrow{x}))$ \\
+	3. Closed under primitive recursion: \[\varphi(\overrightarrow{x},0) \simeq \psi(\overrightarrow{x}), \varphi(\overrightarrow{x}, y+1) = \gamma(\overrightarrow{x}, y, \varphi(\overrightarrow{x}, y))\] 
+	4. Closed under unrestricted $\mu$-recursion: \[\varphi(\overrightarrow{x}) \simeq \mu y [ \forall z \le y. \psi(\overrightarrow{x}, z) \downarrow \land \psi(\overrightarrow{x},y) \simeq 0]\]
+\end{definition}
+
+Recall the normal form expression $U(\mu y. T_n(e,\overrightarrow{x},y))$. In the total setting, it is shown that for $e$ an index of a total recursive function, this gives a value. In particular, the minimized predicate must be regular. But what if $e$ does not correspond to any recursive function? The predicate may not be minimizable, i.e. the corresponding search is not terminating. This problem is removed with the particular $\mu$-operator. In that setting, $\varphi_e^n(\overrightarrow{x}) \simeq U(\mu y. T_n(e,\overrightarrow{x},y))$ always defines a partial function.
+
+\begin{theorem}[Enumeration theorem]
+	For each $e$, $\varphi_e^n$ is a partial recursive function of $n$ variables.
+	
+	If $\psi$ is a partial recursive function of $n$ variables, then there is $e$ such that $\psi \simeq \varphi_e^n$ 
+	
+	There is a partial recursive function $\varphi^{(n+1)}(e,\overrightarrow{x}) \simeq \varphi_e^n(\overrightarrow{x})$
+	
+	In summary, $\varphi$ is a partial recursive function that enumerates all partial recursive functions with its parameter $e$. 
+\end{theorem}
+
+\begin{theorem}[Padding lemma]
+	Let $e$ be an index for a partial recursive function $\varphi$.
+	
+	We can effectively generate infinitely many indices of the same function.
+\end{theorem}
+\begin{proof}
+	It would suffice to apply the identity function to the coding of $\varphi$ or to add and subtract the same quantity. Note that the computation trees appearing in the proof of the normal form theorem have equations as nodes. So the proof is phrased in terms of "adding redundant equations"
+\end{proof}
+
+\begin{theorem}[$S_n^m$/parametrization theorem]
+	Let $m,n \in \omega$. There is a primitive recursive, injective function $S_n^m$ such that: \[\varphi_{S_n^m(e,x_1,\ldots,x_n)}(y_1,\ldots,y_m) \simeq \varphi_e(x_1,\ldots,x_n,y_1, \ldots, y_m)\]
+\end{theorem}
+\begin{proof}
+	We take a partial recursive function coded by a program $e$ and we assume that some of its parameters $x_1, \ldots, x_n$ are fixed. The result is some function $\gamma$. The theorem says that we can compute a program $S_n^m(e,x_1,\ldots,x_n)$ using only primitive recursive means.
+	
+	The computation of $\gamma$ can be described by the function coded by $e$ followed by the equation $\gamma(y_1,\ldots,y_m) \simeq \psi(C_{x_1}, \ldots, C_{x_n}, y_1, \ldots, y_m)$ (recall the computation trees). This function is clearly partial recursive and its index depends on the code $e$ and the fixed constant, call it $S_n^m(e,x_1,\ldots,x_n)$. By construction the index function is injective and its arithmetization is clearly primitive recursive. 
+\end{proof}
+
+Note that the enumeration and parametrization theorems play an inverse role translating arguments to indices and viceversa. This is the essence of partial evaluation and supercompilation.
+
+\subsection{Recursively enumerable sets}
+
+
+
+
+
+
+
+
+
+
