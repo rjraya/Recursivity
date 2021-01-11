@@ -1,5 +1,9 @@
 \subsection{Partial recursive functions}
 
+\begin{definition}[Partial function]
+	A partial function is a function that may be undefined form some arguments. The set of arguments for which it is defined is called its domain.
+\end{definition}
+
 \begin{definition}[Partial recursive $\mu$-operator]
 	A function $f$ is defined from a relation $R$ by $\mu$-recursion if $f(\overrightarrow{x}) \simeq \mu y. R(\overrightarrow{x},y)$.
 \end{definition}
@@ -13,7 +17,29 @@
 	4. Closed under unrestricted $\mu$-recursion: \[\varphi(\overrightarrow{x}) \simeq \mu y [ \forall z \le y. \psi(\overrightarrow{x}, z) \downarrow \land \psi(\overrightarrow{x},y) \simeq 0]\]
 \end{definition}
 
+\begin{theorem}[Normal form theorem for partial recursive functions]
+	There exist: 
+	
+	\begin{itemize}
+		\item $U$ primitive recursive function
+		\item for each $n$, primitive recursive predicates $T_n$
+	\end{itemize} 
+	
+	such that for any recursive function $\varphi^{(n)}$ there is a number $e$ for which: 
+	
+	\begin{itemize}
+		\item $\varphi(x_1,\ldots,x_n) \downarrow \iff \exists y. T_n(e,\overrightarrow{x},y)$
+		\item $\varphi(\overrightarrow{x}) \simeq U(\mu y. T_n(e,\overrightarrow{x},y))$
+	\end{itemize}
+\end{theorem}
+
+\begin{corollary}[Recursive as partial recursive]
+	The recursive functions are exactly the total and partial recursive functions.
+\end{corollary}
+
+
 Recall the normal form expression $U(\mu y. T_n(e,\overrightarrow{x},y))$. In the total setting, it is shown that for $e$ an index of a total recursive function, this gives a value. In particular, the minimized predicate must be regular. But what if $e$ does not correspond to any recursive function? The predicate may not be minimizable, i.e. the corresponding search is not terminating. This problem is removed with the particular $\mu$-operator. In that setting, $\varphi_e^n(\overrightarrow{x}) \simeq U(\mu y. T_n(e,\overrightarrow{x},y))$ always defines a partial function.
+
 
 \begin{theorem}[Enumeration theorem]
 	For each $e$, $\varphi_e^n$ is a partial recursive function of $n$ variables.
@@ -47,10 +73,58 @@ Note that the enumeration and parametrization theorems play an inverse role tran
 
 \subsection{Recursively enumerable sets}
 
+We find the set analog of partial recursive function. Since characteristic functions are total we need to find an alternative definition.
 
+\begin{definition}[Recursively enumerable set]
+	A set is recursively enumerable iff its the domain of a partial recursive function.
+\end{definition}
 
+\begin{notation}
+	Note $W_e^n$ the domain of $\varphi_e^n$ and $W_{e,s}^n$ the domain of $\varphi_{e,s}^n$.
+\end{notation}
 
+\begin{theorem}[Normal form theorem for r.e. relations]
+	An n-ary relation $P^{(n)}$ is r.e. iff one of the following holds:
+	
+	\begin{itemize}
+	\item For some recursive relation $R$: \[P^{(n)} = \{ \overrightarrow{x}. \exists y. R^{(n+1)}(\overrightarrow{x},y) \}\]
+	\item For some index $e$: \[\exists e. P^{(n)} = W_e^n = \{ \overrightarrow{x}. \exists y. T_n(e,\overrightarrow{x},y) \}\]
+	\end{itemize} 
+\end{theorem}
 
+\begin{theorem}[Numerical characterization of r.e. sets]
+	The r.e. sets are exactly the diophantine sets, i.e. sets of the form: \[\{a. \exists \overrightarrow{x}. p(a, \overrightarrow{x}) = 0 \}\] where $p$ is a polynomial with integer coefficients and $a \in \mathbb{Z}, \overrightarrow{x} \in \mathbb{Z}^n$. As a consequence there is no \textit{algorithm} solving Hilbert's tenth problem. 
+\end{theorem}
+
+TODO: there should be a match between this set and the expression of theorem 6. But they appear to list different kinds of elements.
+
+\begin{theorem}[Graph theorem]
+	A function $\varphi$ is partial recursive iff its graph is r.e. 
+	
+	A function $f$ recursive iff its graph is recursive. 
+\end{theorem}
+
+The theorem confirms that the choice of the \textit{domain} is good for the canonical translation from sets to functions given by characteristic functions and from functions to sets given by graph. 
+
+\subsection{Indices and enumerations}
+
+\begin{definition}[System of indices]
+	A system of indices $\psi$ is a family of maps $\psi^n: \omega \to \mathcal{P}^n$. 
+	
+	Note $\psi^n_e := \psi^n(e)$.
+	
+	$\psi$ satisfies enumeration if $\forall n. \exists a. \psi^{n+1}_a(e,x_1, \ldots, x_n) \simeq \psi^n_e(x_1,\ldots,x_n)$.
+	
+	$\psi$ satisfies parametrization if $\forall m, n. \exists s \text{ total recursive}. \psi^m_{s(e,x_1,\ldots,x_n)}(y_1,\ldots,y_m) \simeq \psi^{m+n}_e(x_1,\ldots,x_n,y_1,\ldots,y_m)$
+	
+	Note $\varphi$ the standard system of indices.
+	
+	$\psi$ is acceptable if $\exists f,g \text{ total recursive}. \psi^n_e \simeq \varphi^n_{f(e)}, \varphi^n_e \simeq \psi^n_{g(e)}$
+\end{definition}
+
+\begin{proposition}[Acceptable system characterization]
+	A system of indices is acceptable $\iff$ it satisfies enumeration and parametrization.
+\end{proposition}
 
 
 

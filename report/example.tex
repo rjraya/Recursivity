@@ -8,11 +8,12 @@
 \usepackage{natbib}
 \usepackage{graphicx}
 
+
 \usepackage{amsthm}
 \newtheoremstyle{custom}%    <name>
 {\topsep}%   <space above>
 {\topsep}%   <space below>
-{\itshape}%  <body font>
+{}%  <body font>
 {}%          <indent amount>
 {\bfseries}% <Theorem head font>
 {.}%         <punctuation after theorem head>
@@ -22,6 +23,11 @@
 \newtheorem{theorem}{Theorem}
 \newtheorem{definition}{Definition}[theorem]
 \newtheorem{proposition}{Proposition}[theorem]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{notation}{Notation}[theorem]
+
+% Create new line between parragraphs
+\usepackage[parfill]{parskip}       
 
 % proofs
 
@@ -42,7 +48,8 @@
 \section{Basic recursion theory}
 \input{basic/basic}
 
-
+\newpage
+\section{Measures of complexity}
 
 
 
