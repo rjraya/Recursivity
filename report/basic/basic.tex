@@ -25,7 +25,7 @@
 		\item for each $n$, primitive recursive predicates $T_n$
 	\end{itemize} 
 	
-	such that for any recursive function $\varphi^{(n)}$ there is a number $e$ for which: 
+	such that for any partial recursive function $\varphi^{(n)}$ there is a number $e$ for which: 
 	
 	\begin{itemize}
 		\item $\varphi(x_1,\ldots,x_n) \downarrow \iff \exists y. T_n(e,\overrightarrow{x},y)$
@@ -105,6 +105,164 @@ TODO: there should be a match between this set and the expression of theorem 6. 
 \end{theorem}
 
 The theorem confirms that the choice of the \textit{domain} is good for the canonical translation from sets to functions given by characteristic functions and from functions to sets given by graph. 
+
+
+But the original definition of being the domain of a partial recursive function can be made even more precise. 
+
+\begin{theorem}[Uniformization property]
+	Let $P$ be a r.e. set. 
+	
+	$\exists \varphi \in \mathcal{P}. \forall \overrightarrow{x}. (\exists y. P(\overrightarrow{x},y) \implies \varphi(\overrightarrow{x}) \downarrow \land P(\overrightarrow{x}, \varphi(\overrightarrow{x}))$
+	
+	Furthermore, if $P$ is regular, i.e. $\forall \overrightarrow{x}. \exists y. P(\overrightarrow{x},y)$, then:
+	
+	$\exists f \in \mathcal{R}. \forall \overrightarrow{x}. P(\overrightarrow{x},f(\overrightarrow{x}))$
+\end{theorem}
+
+\begin{theorem}[Characterization by enumeration properties]
+	$A$ is r.e $\iff 
+	\exists \varphi \in \mathcal{P}. A = range(\varphi) \iff 
+	A = \emptyset \lor \exists f \in \mathcal{R}. A = range(f)$ 
+	
+	$A$ is recursive $\iff 
+	A = \emptyset \lor \exists f \in \mathcal{R}. \text{ f is non-decreasing and } A = range(f)$
+\end{theorem}
+
+Thus, we see that recursive sets are those for which a \textit{pattern} in membership can be described by a finite procedure (a decision procedure). Recursively enumerable sets have a pattern for membership but have no finite pattern for non-membership (just list the elements, via a generating procedure). In this sense, they are \textit{half-recursive}. This idea also appears in the following:
+
+\begin{theorem}[Post's theorem]
+	$A$ is recursive iff $A$ and $\overline{A}$ are recursively enumerable. 
+\end{theorem}
+
+We may be interested in studying particular classes of programs and provide decision procedures or generating procedures for them. This may not be possible for a particular class of infinite programs.
+
+\begin{definition}[Inmune set]
+	An infinite set without infinite r.e. subsets are called immune. 
+\end{definition}
+
+If we have a generating procedure for some set we also have a decision procedure for some other subset. 
+
+\begin{proposition}[Infinite decided set of an enumerated set]
+	Every infinite r.e. set has an infinite recursive subset. 
+\end{proposition}
+
+\begin{theorem}[Set theoretical structure of r.e. and recursive sets]
+	1. R.e. sets form a distributive lattice (inclusion as order) with smallest and greatest element, and with the recursive sets as the only complemented elements.
+	
+	2. The property of being r.e. is preserved under images and inverse images via partial recursive functions. 
+	
+	3.The recursive sets form a Boolean algebra (inclusion as order).
+	
+	4. Recusrive sets are preserved under inverse images via recursive functions. 
+	
+	5. The union of two r.e. sets can be reduced to the union of two disjoint r.e. sets.
+\end{theorem}
+
+\subsection{Diagonalization}
+
+\begin{proposition}[Diagonal method]
+	Given:
+	
+	\begin{itemize}
+	\item a set $S$
+	\item a function $d: S \to S$ such that $\forall a \in S. d(a) \neq a$	
+	\item an infinite matrix $(a_{i,j})$ in $S$. 
+	\end{itemize}
+	
+	the transformed diagonal $\{d(a_{n,n})\}_{n \in \omega}$ differs from every row $\{a_{i,j}\}_{j \in \omega}$.
+\end{proposition}
+\begin{proof}
+	The $i$-th element of the $i$-th row is different from the i-th element of the transformed diagonal, i.e. $d(a_{i,i}) \neq a_{i,i}$.
+\end{proof}
+
+Note that the diagonal method is a transformational method, in the sense that, we study properties that remain invariant under a class transformations. The transformation on the diagonal is $d$, the transformation of the rows are the identities. The property that is preserved is that the diagonal and the transformed diagonal do not match any of the rows. 
+
+The method of proof seems to encode the \textit{recursivity} or \textit{self-reference} as the repetition of a variable on a table. But other than that all aspects of the method may be generalized and one maybe asked to change $d$ and the relevant subset of the matrix where other invariants holds. In this sense, the diagonalization method may be seen as \textbf{the first proof method in the transformational approach}.
+
+\subsubsection{Undecidability results}
+
+\begin{proposition}[Recursive version of Cantor's theorem]
+	No recursive function enumerates the recursive $0,1$-valued functions.
+\end{proposition}
+\begin{proof}
+	We will give a direct proof and a diagonalization proof. 
+	
+	1. Let $f$ be a recursive function such that every function in the canonical enumeration (i.e. the only sort of enumeration we refer to in the statement of the lemma) $\{\varphi_{f(x)} \}_{x \in \omega}$ is recursive and $0,1$-valued. To reach a contradiction, define $g \, \cdot \simeq 1-\varphi_{f \, \cdot} \,  \cdot$. We observe that:
+	
+	\begin{itemize}
+	\item $g$ is $\{0,1\}$-valued.
+	\item $g$ is total since $f$ is and the enumeration is over total functions.
+	\item $g$ is partial recursive since substraction is and the enumeration theorem ensures that $\varphi_{f(x)}$ is also.
+	\end{itemize}
+	
+	By the corollary to the normal form theorem, we have $g$ is $\{0,1\}$-valued and total recursive. However, if there is an $x$ where $g = \varphi_{f(x)}$ then $\varphi_{f(x)}(x) = 1 - \varphi_{f(x)}(x)$ which is impossible since $\varphi_{f(x)}(x)$ is $\{0,1\}$-valued.
+	
+	2. Take $S = \{0,1\}, d(a) = 1 - a$ which satisfies $\forall a \in S. d(a) \neq a$, finally take $a_{i,j} = \varphi_{f(i)}(j)$ so that on each row we picture the complete sequence of a given listed $\{0,1\}$-valued recursive function $\varphi_{f(i)}$.  The diagonal method tells us that the diagonal sequence $\{d(a_{i,i})\} = \{\varphi_{f(i)}(i)\}$ does not correspond to any row. So if we set $g(i) = 1 - \varphi_{f(i)}(i)$ it satisfies the three points above and is not in the list. Contradiction. 
+\end{proof}
+
+\begin{corollary}[$\mathcal{R}$ are not r.e.]
+	$\{x. \varphi_x \in \mathcal{R} \}$ is not r.e.
+\end{corollary}
+\begin{proof}
+	Note that using the substraction operation where $n-m = 0$ whenever $m \ge n$ the proof of the above theorem stays the same removing the condition that $\varphi_{f(x)}$ needs to be $\{0,1\}$-valued. So we have that no recursive function enumerating all recursive functions since there is always one $\{0,1\}$-valued function escaping. This is the same as saying that $\{x. \varphi_x \in \mathcal{R} \}$ is not r.e.
+\end{proof}
+
+This happens in contrast with partial recursive and primitive recursive functions which give sets of codes which are r.e.
+
+\begin{theorem}[Combinatorial core of the undecidability results]
+	$\{x. x \in W_x \} = \{x. \varphi_x(x) \downarrow \}$ is r.e. and nonrecursive.
+\end{theorem}
+
+The following is a strengthening of the above theorem.
+
+\begin{definition}[Recursive separability]
+	Let $A,B$ be disjoint sets.
+	
+	$A,B$ are recursively separable if $\exists C. A \subseteq C \land B \subseteq \overline{C}$.
+\end{definition}
+
+\begin{theorem}[Stronger combinatorial core]
+	There are two disjoint, r.e. and recusively inseparable sets.
+\end{theorem}
+
+Another reformulation is the undecidability of the halting program. Originally stated, it says that no Turing machine can decide whether a universal Turing machine halts or not on given arguments.
+
+\begin{theorem}[Undecidability of halting problem]
+	$\{\langle x,e \rangle. x \in W_e \} = \{\langle x,e \rangle. \varphi_e(x) \downarrow \}$ is r.e. and nonrecursive.
+\end{theorem}
+
+The halting problem is a first example where we study the solvability of properties of programs. To this end we may want to introduce notation to refer to sets that are generated by these programs.
+
+\begin{definition}[Index set]
+	Let $\mathcal{A}$ a class of $\mathcal{P}$. 
+	
+	$A = \theta \mathcal{A} = \{x. \varphi_x \in \mathcal{A} \}$ is the index set of $\mathcal{A}$.
+	
+	$\mathcal{A}$ is completely recursive if $A$ is recursive.
+\end{definition}
+
+Complete recursivity denotes those sets of programs for which decision procedures exists, i.e. procedures that will find them and rule out any other program.
+
+\begin{theorem}[Rice's theorem]
+	$\mathcal{A}$ is completely recursive iff $\mathcal{A} = \emptyset \lor \mathcal{A} = \mathcal{P}$.
+\end{theorem}
+
+For instance, one could consider a finite set of programs. We can easily find a program listing them. But given another program, we also need to check it does not correspond to the behaviour of one in the list. This implies in particular solving halting problems for certain inputs.
+
+
+For sufficiently complicated programs, the program itself is its best description. Because at the end, to decide each possible property $P_i$ of the program I need a specific algorithm $A_i$. This is why we say that the behaviour of a mechanism (an object whose local behaviour is understood) does not need to be globally predictable. This occurs in any science whose basic principles are defined but their outcome may not.
+
+
+\subsubsection{Fixed-point theorem}
+
+The following theorem shows that $\mathcal{P}$ has a built-in defense against diagonalization (??, TODO).
+
+\begin{theorem}[Fixed-point theorem]
+	$\forall f \in \mathcal{R}. \exists e. \varphi_e \simeq \varphi_{f(e)}$
+\end{theorem}
+\begin{proof}
+	1.
+\end{proof}
 
 \subsection{Indices and enumerations}
 

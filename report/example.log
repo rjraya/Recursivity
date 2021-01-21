@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.12) (preloaded format=pdflatex 2020.11.2)  11 JAN 2021 10:37
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.12) (preloaded format=pdflatex 2020.11.2)  13 JAN 2021 13:21
 entering extended mode
 **./example.tex
 (example.tex
@@ -277,52 +277,89 @@ m/n/12 (\OML/cmm/m/it/12 C[]; [] ; C[]; y[]; [] ; y[]\OT1/cmr/m/n/12 )$ \T1/cmr
 /m/n/12 (recall the computation
  []
 
-[4] [5]
-Overfull \hbox (9.31535pt too wide) in paragraph at lines 118--119
+[4] [5] [6] [7] [8]
+Overfull \hbox (11.42545pt too wide) in paragraph at lines 210--211
+[]\T1/cmr/m/n/12 This happens in contrast with partial recursive and primitive 
+recursive functions
+ []
+
+
+Overfull \hbox (2.8285pt too wide) in paragraph at lines 228--229
+[]\T1/cmr/m/n/12 Another reformulation is the undecidability of the halting pro
+gram. Originally
+ []
+
+[9]
+Overfull \hbox (20.04013pt too wide) in paragraph at lines 244--245
+[]\T1/cmr/m/n/12 Complete recursivity denotes those sets of programs for which 
+decision procedures
+ []
+
+
+Overfull \hbox (8.09854pt too wide) in paragraph at lines 244--245
+\T1/cmr/m/n/12 exists, i.e. procedures that will find them and rule out any oth
+er program. 
+ []
+
+
+Overfull \hbox (5.71294pt too wide) in paragraph at lines 253--254
+[]\T1/cmr/m/n/12 For sufficiently complicated programs, the program itself is i
+ts best description.
+ []
+
+
+Overfull \hbox (19.06215pt too wide) in paragraph at lines 258--259
+\T1/cmr/m/n/12 The following theorem shows that $\OMS/cmsy/m/n/12 P$ \T1/cmr/m/
+n/12 has a built-in defense against diagonalization
+ []
+
+[10]
+Overfull \hbox (9.31535pt too wide) in paragraph at lines 276--277
 []$\OML/cmm/m/it/12  $ \T1/cmr/m/n/12 satisfies parametrization if $\OMS/cmsy/m
 /n/12 8\OML/cmm/m/it/12 m; n:\OMS/cmsy/m/n/12 9\OML/cmm/m/it/12 s[]: []\OT1/cmr
 /m/n/12 (\OML/cmm/m/it/12 y[]; [] ; y[]\OT1/cmr/m/n/12 ) \OMS/cmsy/m/n/12 '
  []
 
 
-Overfull \hbox (31.34164pt too wide) in paragraph at lines 126--127
+Overfull \hbox (31.34164pt too wide) in paragraph at lines 284--285
 \T1/cmr/m/n/12 A system of indices is acceptable $ \OMS/cmsy/m/n/12 ([]) $ \T1/
 cmr/m/n/12 it satisfies enumeration and parametrization. 
  []
 
-) [6] (example.bbl
+) [11] [12] (observe/observe.tex) (example.bbl
 
 Package natbib Warning: Empty `thebibliography' environment on input line 8.
 
-) [7] (example.aux) ) 
+) [13] (example.aux) ) 
 Here is how much of TeX's memory you used:
- 4077 strings out of 482164
- 55703 string characters out of 2931716
- 351489 words of memory out of 3000000
- 20324 multiletter control sequences out of 15000+200000
+ 4083 strings out of 482164
+ 55885 string characters out of 2931716
+ 351491 words of memory out of 3000000
+ 20325 multiletter control sequences out of 15000+200000
  546912 words of font info for 57 fonts, out of 3000000 for 9000
  0 hyphenation exceptions out of 8191
  60i,14n,66p,944b,210s stack positions out of 5000i,500n,10000p,200000b,50000s
- </localhome/raya/.miktex/texmfs/data/fonts/pk/ljfour/jkna
-ppen/ec/dpi600/ecti1200.pk> </localhome/raya/.miktex/texmfs/data/fonts/pk/ljfou
-r/jknappen/ec/dpi600/tcrm1200.pk> </localhome/raya/.miktex/texmfs/data/fonts/pk
-/ljfour/jknappen/ec/dpi600/ecrm1200.pk> </localhome/raya/.miktex/texmfs/data/fo
-nts/pk/ljfour/jknappen/ec/dpi600/ecbx1200.pk> </localhome/raya/.miktex/texmfs/d
-ata/fonts/pk/ljfour/jknappen/ec/dpi600/ecbx1440.pk> </localhome/raya/.miktex/te
-xmfs/data/fonts/pk/ljfour/jknappen/ec/dpi600/ecbx1728.pk></localhome/raya/.mikt
-ex/texmfs/install/fonts/type1/public/amsfonts/cm/cmex10.pfb></localhome/raya/.m
-iktex/texmfs/install/fonts/type1/public/amsfonts/cm/cmmi12.pfb></localhome/raya
-/.miktex/texmfs/install/fonts/type1/public/amsfonts/cm/cmmi6.pfb></localhome/ra
-ya/.miktex/texmfs/install/fonts/type1/public/amsfonts/cm/cmmi8.pfb></localhome/
-raya/.miktex/texmfs/install/fonts/type1/public/amsfonts/cm/cmr12.pfb></localhom
-e/raya/.miktex/texmfs/install/fonts/type1/public/amsfonts/cm/cmr6.pfb></localho
-me/raya/.miktex/texmfs/install/fonts/type1/public/amsfonts/cm/cmr8.pfb></localh
-ome/raya/.miktex/texmfs/install/fonts/type1/public/amsfonts/cm/cmsy10.pfb></loc
-alhome/raya/.miktex/texmfs/install/fonts/type1/public/amsfonts/symbols/msbm10.p
-fb>
-Output written on example.pdf (7 pages, 156502 bytes).
+ </localhome/raya/.miktex/texmfs/data/fonts/pk/ljfour/jkn
+appen/ec/dpi600/ecti1200.pk> </localhome/raya/.miktex/texmfs/data/fonts/pk/ljfo
+ur/jknappen/ec/dpi600/tcrm1200.pk> </localhome/raya/.miktex/texmfs/data/fonts/p
+k/ljfour/jknappen/ec/dpi600/ecrm1200.pk> </localhome/raya/.miktex/texmfs/data/f
+onts/pk/ljfour/jknappen/ec/dpi600/ecbx1200.pk> </localhome/raya/.miktex/texmfs/
+data/fonts/pk/ljfour/jknappen/ec/dpi600/ecbx1440.pk> </localhome/raya/.miktex/t
+exmfs/data/fonts/pk/ljfour/jknappen/ec/dpi600/ecbx1728.pk></localhome/raya/.mik
+tex/texmfs/install/fonts/type1/public/amsfonts/cm/cmex10.pfb></localhome/raya/.
+miktex/texmfs/install/fonts/type1/public/amsfonts/cm/cmmi12.pfb></localhome/ray
+a/.miktex/texmfs/install/fonts/type1/public/amsfonts/cm/cmmi6.pfb></localhome/r
+aya/.miktex/texmfs/install/fonts/type1/public/amsfonts/cm/cmmi8.pfb></localhome
+/raya/.miktex/texmfs/install/fonts/type1/public/amsfonts/cm/cmr12.pfb></localho
+me/raya/.miktex/texmfs/install/fonts/type1/public/amsfonts/cm/cmr6.pfb></localh
+ome/raya/.miktex/texmfs/install/fonts/type1/public/amsfonts/cm/cmr8.pfb></local
+home/raya/.miktex/texmfs/install/fonts/type1/public/amsfonts/cm/cmsy10.pfb></lo
+calhome/raya/.miktex/texmfs/install/fonts/type1/public/amsfonts/cm/cmsy8.pfb></
+localhome/raya/.miktex/texmfs/install/fonts/type1/public/amsfonts/symbols/msbm1
+0.pfb>
+Output written on example.pdf (13 pages, 188961 bytes).
 PDF statistics:
- 252 PDF objects out of 1000 (max. 8388607)
+ 301 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
